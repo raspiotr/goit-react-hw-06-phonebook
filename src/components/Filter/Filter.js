@@ -1,10 +1,16 @@
+import { useDispatch } from 'react-redux';
+import { setFilter } from 'redux/filterSlice';
 import { nanoid } from 'nanoid';
 import css from './Filter.module.css';
-import PropTypes from 'prop-types';
 
-export const Filter = props => {
+export const Filter = () => {
   const filterInputId = nanoid();
-  const { onChangeHandle } = props;
+
+  const dispatch = useDispatch();
+
+  const handleFilterChange = event => {
+    dispatch(setFilter(event.target.value));
+  };
 
   return (
     <div className={css.filter}>
@@ -16,12 +22,8 @@ export const Filter = props => {
         type="text"
         name="filter"
         id={filterInputId}
-        onChange={onChangeHandle}
+        onChange={handleFilterChange}
       />
     </div>
   );
-};
-
-Filter.propTypes = {
-  onChangeHandle: PropTypes.func.isRequired,
 };
